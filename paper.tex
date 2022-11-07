@@ -1,0 +1,422 @@
+\documentclass{article}
+
+\usepackage[a4paper]{geometry}
+\usepackage{graphicx}
+\usepackage{wrapfig}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{bm}
+\usepackage{mathtools}
+\usepackage{microtype}
+\usepackage{enumerate}
+\usepackage{upgreek}
+\usepackage{float}
+\usepackage{multirow}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{svg}
+\usepackage[]{xcolor}
+\usepackage{setspace}
+\usepackage{pdfpages}
+%\usepackage{fullpage}
+\usepackage[justification=centering]{caption}
+\usepackage{natbib}
+\bibliographystyle{apalike}
+\usepackage{titlesec}
+\usepackage{import}
+\usepackage[hyphens]{url}
+
+\newcommand{\incfig}[2][1]{%
+\fontsize{15pt}{16pt}\selectfont 
+    \def\svgwidth{#1\columnwidth}
+    \import{./figures/}{#2.pdf_tex}
+}
+% \pdfsuppresswarningpagegroup=1
+
+\newtheorem{lemma}{Lemma}[section]
+\newtheorem{theorem}{Theorem}[section]
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}[section]
+\newtheorem*{definition*}{Definition}
+\theoremstyle{exercise}
+\newtheorem{exercise}{Exercise}[section]
+\theoremstyle{remark}
+\newtheorem*{remark}{Remark}
+
+% Font
+% \usepackage[T1]{fontenc}
+% \usepackage[utf8]{inputenc}
+% \usepackage[urw-garamond]{mathdesign}
+
+\newcommand{\eq}{&=}
+\newcommand\nt{\addtocounter{equation}{1}\tag{\theequation}}
+
+
+
+\title{A Static Bayesian Game of Social Interaction Under Infection Risk}
+\author{Antoine Carnec \;\; 17329720}
+\date{\today}
+
+\begin{document}
+\maketitle
+\noindent
+
+\section{Description of the Game} % Symmetric types and symmetric actions.
+I present a two player game of incomplete information where the players simultaneously choose whether to commit to a social interaction or whether to avoid interacting. 
+This game models a general setting where some contagious risk is involved in the interaction.
+Here is a description of the game's formal features.
+\begin{enumerate}[1.]
+    \item There are two players, denoted by $\mathcal{P} = \{1,2\}$.
+    \item The types in the game are simply $\{\text{infectious},\text{susceptible}\}$. I denote this set by $\mathcal{T} = \{I, S\}$. Both players have imperfect information in this game, as both can be infectious or susceptible.
+    \item The probability distribution over the types is symmetric, denoted by $(\phi, 1 - \phi)$. Probability of $\phi$ of being infectious, and $1 - \phi$ of being susceptible.
+    \item The player's have both have the same set of actions, to interact $(\bm{I})$, or to avoid the interaction $(\bm{A})$, denoted by $\mathcal{A} = \{ \bm{I}, \bm{A}\}$.
+\end{enumerate}
+
+
+\section{Assumptions}
+I shall make several assumptions to formulate this game.
+\begin{enumerate}[1.]
+    \item There is no communication between players before the decisions are made.
+    \item Players know how much benefit everyone derives from the interaction, as well as all of the possible costs.
+    \item Both players get the same benefit from interacting when they are infectious as when they are susceptible.
+    \item Infectious and susceptible are mutually exclusive.
+    \item I assume that players know for certain whether they are infectious or susceptible.
+    \item Both players have an equal likelihood of being infected. Therefore, $\phi$ may be interpreted as the proportion of the population that is infected (assuming that two players are chosen randomly from the population to play against each other).
+    % \item Costs of being infected and infecting increase linearly with the probability of being infectious.
+\end{enumerate}
+% No cost to meeting up when both are infected. This may be unrealistic for many reasons.
+
+\section{Payoffs}
+We specify the payoffs in relation to the relevant types of the players.
+Players only have an interaction if both of them play $\bm{I}$, otherwise they will not interact.
+A player will prefer to interact if the benefit to the interaction is greater than the costs to the interaction. We want the payoffs to our game to have the following structure. 
+\begin{align*}
+    U(\text{Interacting}) &= \text{Benefit from Interaction} - \text{Cost to Interaction} \\
+    U(\text{Not Interacting}) &= 0 \\
+\end{align*}
+Setting the payoff of not interacting to $0$ guarantees the interpretation that a player will only interact if the benefits of interacting outweigh the costs.
+
+
+Let $B_i$ be the benefit to the interaction, $C_i$ the cost of getting infected, and $D_i$ the cost of infecting the other player---where $i$ references a player. I assume that $B_i, C_i, D_i > 0$.
+We may now express the payoff to interacting as follows.
+\begin{align*}
+    U_i(\text{Interacting} \;|\; \text{No infectious players}) &= B_i \\
+    U_i(\text{Interacting} \;|\; \text{player $i$ susceptible, player $j$ infectious}) &= B_i - C_i \\
+    U_i(\text{Interacting} \;|\; \text{player $i$ infectious, player $j$ susceptible}) &= B_i - D_i \\
+    U_i(\text{Interacting} \;|\; \text{player $i$ infectious, player $j$ infectious}) &= B_i
+\end{align*}
+
+  \begin{table}[H]
+      \centering
+      %
+    \begin{minipage}{.5\textwidth}
+    \setlength{\extrarowheight}{2pt}
+    \begin{tabular}{cc|c|c|}
+        & \multicolumn{1}{c}{} & \multicolumn{2}{c}{Player $j$ (infectious) $\phi$}\\
+      & \multicolumn{1}{c}{} & \multicolumn{1}{c}{$\bm{I}$}  & \multicolumn{1}{c}{$\bm{A}$} \\\cline{3-4}
+        \multirow{2}*{Player $i$ }  & $\bm{I}$ & $B_i, B_j$ & $0,0$ \\\cline{3-4}
+        & $\bm{A}$ & $0,0$ & $0,0$ \\\cline{3-4}
+    \end{tabular}
+    \end{minipage}%
+    \begin{minipage}{.5\textwidth}
+    \setlength{\extrarowheight}{2pt}
+    \begin{tabular}{cc|c|c|}
+        & \multicolumn{1}{c}{} & \multicolumn{2}{c}{Player $2$ (susceptible) $1 - \phi$}\\
+      & \multicolumn{1}{c}{} & \multicolumn{1}{c}{$\bm{I}$}  & \multicolumn{1}{c}{$\bm{A}$} \\\cline{3-4}
+        \multirow{2}*{Player $i$}  & $\bm{I}$ & $B_i - D_i, B_j - C_j$ & $0,0$ \\\cline{3-4}
+        & $\bm{A}$ & $0,0$ & $0,0$ \\\cline{3-4}
+    \end{tabular}
+    \end{minipage}
+      \caption{Payoffs when Player i is infectious.}
+  \end{table}
+  \begin{table}[H]
+      \centering
+      %
+    \begin{minipage}{.5\textwidth}
+    \setlength{\extrarowheight}{2pt}
+    \begin{tabular}{cc|c|c|}
+        & \multicolumn{1}{c}{} & \multicolumn{2}{c}{Player $j$ (infectious) $\phi$}\\
+      & \multicolumn{1}{c}{} & \multicolumn{1}{c}{$\bm{I}$}  & \multicolumn{1}{c}{$\bm{A}$} \\\cline{3-4}
+        \multirow{2}*{Player $i$ }  & $\bm{I}$ & $B_i - C_i , B_j - D_j$ & $0,0$ \\\cline{3-4}
+        & $\bm{A}$ & $0,0$ & $0,0$ \\\cline{3-4}
+    \end{tabular}
+    \end{minipage}%
+    \begin{minipage}{.5\textwidth}
+    \setlength{\extrarowheight}{2pt}
+    \begin{tabular}{cc|c|c|}
+        & \multicolumn{1}{c}{} & \multicolumn{2}{c}{Player $j$ (susceptible) $1 - \phi$}\\
+      & \multicolumn{1}{c}{} & \multicolumn{1}{c}{$\bm{I}$}  & \multicolumn{1}{c}{$\bm{A}$} \\\cline{3-4}
+        \multirow{2}*{Player $i$}  & $\bm{I}$ & $B_i, B_j$ & $0,0$ \\\cline{3-4}
+        & $\bm{A}$ & $0,0$ & $0,0$ \\\cline{3-4}
+    \end{tabular}
+    \end{minipage}
+      \caption{Payoffs when Player i is susceptible.}
+  \end{table}
+
+
+We now calculate the following expected payoff for player $i$, given all of player $j$'s  possible strategies.
+Since the two individuals have identical payoff functions, it is sufficient to calculate the expected value for some player $i$.
+Some notation first, $U_i^{\tau}(A \;|\; BC)$ means the expected utility to player $i$ when she is of type $\tau$ and she plays $A$, given that the other player plays $B$ if infectious and $C$ if susceptible.
+
+
+\begin{align*}
+    U_i^{I}(\bm{I} \;|\; \bm{II}) &= \phi(B_i) + (1 - \phi)(B_i - D_i) = B_i - (1 - \phi) D_i  \\
+    U_i^{I}(\bm{I} \;|\; \bm{IA}) &= \phi B_i \\
+    U_i^{I}(\bm{I} \;|\; \bm{AI}) &=  (1 - \phi)(B_i - D_i)\\
+    U_i^{I}(\bm{I} \;|\; \bm{AA}) &=  0 \\
+    U_i^{I}(\bm{A} \;|\; XY) &= 0 \\
+    U_i^{S}(\bm{I} \;|\; \bm{II}) &= \phi(B_i - C_i) + (1 - \phi)(B_i) = B_i - \phi C_i  \\
+    U_i^{S}(\bm{I} \;|\; \bm{IA}) &=  \phi(B_i - C_i) \\
+    U_i^{S}(\bm{I} \;|\; \bm{AI}) &=  (1 - \phi)B_i \\
+    U_i^{S}(\bm{I} \;|\; \bm{AA}) &=  0\\
+    U_i^{S}(\bm{A} \;|\; XY) &=  0 \\
+\end{align*}
+This leads to the following picture. Taking a particular example, $\bm{IA}$ denotes a possible strategy to player $j$, namely playing $\bm{I}$ when infectious, and $\bm{A}$ when susceptible.
+
+  \begin{table}[H]
+      \centering
+      %
+    % \begin{minipage}{.5\textwidth}
+    % \setlength{\extrarowheight}{2pt}
+    % \begin{tabular}{cc|c|c|}
+    %     & \multicolumn{1}{c}{} & \multicolumn{2}{c}{Player $2$ (infectious) $\phi$}\\
+    %   & \multicolumn{1}{c}{} & \multicolumn{1}{c}{$\bm{I}$}  & \multicolumn{1}{c}{$\bm{A}$} \\\cline{3-4}
+    %   \multirow{2}*{Player $1$}  & $\bm{I}$ & $B_2$ & $0$ \\\cline{3-4}
+    %     & $\bm{A}$ & $0$ & $0$ \\\cline{3-4}
+    % \end{tabular}
+    % \end{minipage}%
+    % \begin{minipage}{.5\textwidth}
+    % \setlength{\extrarowheight}{2pt}
+    % \begin{tabular}{cc|c|c|}
+    %     & \multicolumn{1}{c}{} & \multicolumn{2}{c}{Player $2$ (susceptible) $1 - \phi$}\\
+    %   & \multicolumn{1}{c}{} & \multicolumn{1}{c}{$\bm{I}$}  & \multicolumn{1}{c}{$\bm{A}$} \\\cline{3-4}
+    %   \multirow{2}*{Player $1$}  & $\bm{I}$ & $B_2 - C_2$ & $0$ \\\cline{3-4}
+    %     & $\bm{A}$ & $0$ & $0$ \\\cline{3-4}
+    % \end{tabular}
+    % \end{minipage}
+      %
+      %
+    \setlength{\extrarowheight}{2pt}
+    \begin{tabular}{cc|c|c|c|c|}
+        & \multicolumn{1}{c}{} & \multicolumn{1}{c}{} & \multicolumn{2}{c}{Player $j$} & \multicolumn{1}{c}{}\\
+        & \multicolumn{1}{c}{} & \multicolumn{1}{c}{$\bm{II}$}  & \multicolumn{1}{c}{$\bm{IA}$} & \multicolumn{1}{c}{$\bm{AI}$}& \multicolumn{1}{c}{$\bm{A A}$}\\\cline{3-6}
+        \multirow{2}*{Player $i$}  & $\bm{I}$ & $B_i - (1 - \phi) D_i$ & $\phi B_i$ & $(1 - \phi)(B_i - D_i)$ & 0 \\\cline{3-6}
+        & $\bm{A}$ & $0$ & $0$ & $0$& $0$\\\cline{3-6}
+    \end{tabular}
+    \caption{Payoff to Player $i$ if she is infectious.}
+  \end{table}
+
+  \begin{table}[H]
+      \centering
+      %
+    % \begin{minipage}{.5\textwidth}
+    % \setlength{\extrarowheight}{2pt}
+    % \begin{tabular}{cc|c|c|}
+    %     & \multicolumn{1}{c}{} & \multicolumn{2}{c}{Player $2$ (infectious) $\phi$}\\
+    %   & \multicolumn{1}{c}{} & \multicolumn{1}{c}{$\bm{I}$}  & \multicolumn{1}{c}{$\bm{A}$} \\\cline{3-4}
+    %   \multirow{2}*{Player $1$}  & $\bm{I}$ & $B_2 - D_2$ & $0$ \\\cline{3-4}
+    %     & $\bm{A}$ & $0$ & $0$ \\\cline{3-4}
+    % \end{tabular}
+    % \end{minipage}%
+    % \begin{minipage}{.5\textwidth}
+    % \setlength{\extrarowheight}{2pt}
+    % \begin{tabular}{cc|c|c|}
+    %     & \multicolumn{1}{c}{} & \multicolumn{2}{c}{Player $2$ (susceptible) $1 - \phi$}\\
+    %   & \multicolumn{1}{c}{} & \multicolumn{1}{c}{$\bm{I}$}  & \multicolumn{1}{c}{$\bm{A}$} \\\cline{3-4}
+    %   \multirow{2}*{Player $1$}  & $\bm{I}$ & $B_2$ & $0$ \\\cline{3-4}
+    %     & $\bm{A}$ & $0$ & $0$ \\\cline{3-4}
+    % \end{tabular}
+    % \end{minipage}
+      %
+      %
+    \setlength{\extrarowheight}{2pt}
+    \begin{tabular}{cc|c|c|c|c|}
+        & \multicolumn{1}{c}{} & \multicolumn{1}{c}{} & \multicolumn{2}{c}{Player $j$} & \multicolumn{1}{c}{}\\
+        & \multicolumn{1}{c}{} & \multicolumn{1}{c}{$\bm{II}$}  & \multicolumn{1}{c}{$\bm{IA}$} & \multicolumn{1}{c}{$\bm{AI}$}& \multicolumn{1}{c}{$\bm{A A}$}\\\cline{3-6}
+        \multirow{2}*{Player $i$}  & $\bm{I}$ & $B_i - \phi C_i$ & $\phi(B_i - C_i)$ & $(1 - \phi) B_i$ & 0 \\\cline{3-6}
+        & $\bm{A}$ & $0$ & $0$ & $0$& $0$\\\cline{3-6}
+    \end{tabular}
+    \caption{Payoff to Player $i$ if she is susceptible.}
+  \end{table}
+
+
+\section{Solving the Game}
+\subsubsection*{Definition of Bayesian Nash Equilibrium}
+A strategy $s : \mathcal{T} \to \mathcal{A}$ is a function that takes a player's type and outputs an action, we denote the set of strategies by $\mathcal{S}$.
+We have represented strategies so far as $XY$, but we now denote them by $(s_i(I), s_i(S))$.
+
+An action profile $a$ is an action for each type of each player, equivalently, it is a tuple of strategies, one for each player. It describes what action each player takes at each type. We express an action profile notationally $a = \langle (s_{1}(I), s_1(S)), (s_2(I), s_2(S)) \rangle$. This gives a complete description of what a every player does at each possible type.
+
+A Bayesian Nash Equilibrium in this context is defined as an action profile $$a^* = \langle  (s^*_1(I), s^{*}_1(S)), (s_2^{*}(I), s_2^*(S)) \rangle$$ 
+that satisfies
+\begin{align*}
+    s^*_i(\cdot) \in \arg\!\max_{s' \in \mathcal{S}} \;\: \phi U_i(s', s_{-i}(I)) + (1 - \phi) U_i(s', s_{-i}(S)) \nt \label{def}
+\end{align*}
+for every player $i$.
+
+
+\subsection*{Best response functions}
+These will be helpful in finding Bayesian Nash Equilibria.
+Every best-response function $\mathcal{B} : \mathcal{T} \times \mathcal{S} \to \mathcal{A}$ takes a the player's type and the other player's strategy and returns an action for that type, such that the expected payoff of this action is maximised, given the strategy given as input.
+
+A Bayesian Nash equilibrium is a tuple of strategies $(s^*_1(\cdot), s^*_2(\cdot))$ which satisfy
+\[
+s^*_i(\tau) \in \mathcal{B}_i^{\tau}(s^*_j(\cdot)) \nt \label{bnetest}
+\]
+for $i \in \{1,2\} $, $\tau \in \{I, S\} $ and $i \neq j$. This is an equivalent definition to (\ref{def}).
+
+Using table 3 and 4, it is easy to see that the best response functions can be characterised as follows\footnote{For simplicity, I avoid the cases where $B_i = C_i, D_i$.}:
+\begin{align*}
+    \mathcal{B}^{I}_i &= \begin{cases}
+        \bm{II} \implies& \text{$\bm{I}$ iff $B_i > (1 - \phi)D_i$} \\
+        \bm{IA} \implies& \text{$\bm{I}$} \\
+        \bm{AI} \implies& \text{$\bm{A}$ iff $B_i < D_i$} \\
+        \bm{AA} \implies& \text{$(p, 1-p)$ over $\{\bm{I}, \bm{A}\}$ for any $p \in [0,1]$} \\
+    \end{cases} \\
+    \mathcal{B}^{S}_i &= \begin{cases}
+        \bm{II} \implies& \text{$\bm{I}$ iff  $B_i > \phi C_i$} \\
+        \bm{IA} \implies& \text{$\bm{A}$ iff $B_i < C_i$} \\
+        \bm{AI} \implies& \text{$\bm{I}$} \\
+        \bm{AA} \implies& \text{$(p, 1-p)$ over $\{\bm{I}, \bm{A}\}$ for any $p \in [0,1]$} \\
+    \end{cases} \\
+\end{align*}
+
+\subsection*{Categorization of Pure Strategy Equilibria}
+I will be only interested in pure strategy equilibria. % TODO maybe change this?
+
+One immediate fact to note is that $\langle  (\bm{A}, \bm{A}), (\bm{A}, \bm{A})\rangle$ is always a BNE regardless of the parameter choice. It is always rational for both parties to avoid interacting, as there is no incentive for any individual to change their strategy in this situation, as the players must both coordinate to get an interaction going. % To be more precise any action profile of the form $\langle (\bm{A},\bm{A}), (X, Y) \rangle$ or $\langle (X,Y), (\bm{A}, \bm{A})$ for any action---and any probability distribution over---$X$ and $Y$ is a Bayesian Nash Equilibrium.
+The proof of this fact is straight forward, for any type $\tau$, $B_i^{\tau}(\bm{AA})$ is an arbitrary mixed strategy over actions, so in particular $\bm{A} \in B_i^{\tau}(\bm{AA})$. Since $i$ was arbitrary, this is true for both players, and so this action profile is a BNE by (\ref{bnetest}).
+
+\subsubsection*{Under the assumption of $C_i, D_i > B_i$.}
+% First note that $B_i - (1 - \phi)D_i > \phi B_i$ is equivalent to $B_1 > D_1$.
+% This implies that if the costs of infecting are bigger than the benefits of the interaction, then players will always avoid interacting when the can incur costs.
+\begin{enumerate}[I.]
+    \item $ \langle (\bm{I}, \bm{I}), (\bm{I}, \bm{I}) \rangle$ is a BNE only when $B_i > (1 - \phi)D_i$ or when $B_i > \phi C_i$ for both players. 
+        
+        Otherwise, There is always an incentive for one of the players to switch their strategy to $(\bm{A}, \bm{A})$ as can be seen in the best response functions.
+
+
+\item $\langle (\bm{A}, \bm{I}), (\bm{A}, \bm{I}) \rangle$ is a BNE. 
+
+\item $\langle (\bm{I}, \bm{A}), (\bm{I}, \bm{A}) \rangle$ is a BNE.
+
+\end{enumerate}
+\subsubsection*{Low Cost to Being Infected or Infecting, $C_i, D_i < B_i$ for $i \in \{1,2\}$.}
+\begin{enumerate}[(1).]
+    \item Under this circumstance, $\langle (\bm{I}, \bm{I}), (\bm{I}, \bm{I}) \rangle$ will be a BNE, since $B_i > C_i, D_i$ implies $B_i > \phi C_i, (1 - \phi)D_i$.
+
+        In fact, in this case, the only equilibria are this one and $\langle (\bm{A},\bm{A}), (\bm{A},\bm{A}) \rangle$.% TODO The interpretation is obvious.
+\end{enumerate}
+
+
+\subsubsection*{One Selfish Individual, $ B_1 > D_1$.}
+\textbf{Note: From now on, unless stated otherwise, assume $B_i < C_i, D_i$}\\
+%
+If there player 1 has $B_1 > D_1$, then their best response function when infectious is
+\begin{align*}
+    \mathcal{B}^{I}_1 = \begin{cases}
+         \bm{II} \implies& \bm{I}\\
+         \bm{IA}\implies& \bm{I}  \\
+         \bm{AI}\implies& \bm{I}  \\
+         \bm{AA}\implies& \text{$(p, 1 - p)$ over $\{ \bm{I}, \bm{A}\}$ for any $p \in (0,1)$} \\
+    \end{cases}
+\end{align*}
+
+This will imply that 
+\begin{enumerate}[i.]
+    % \item $\langle (\bm{I}, \bm{I}), (\bm{A}, \bm{I}) \rangle$ is \emph{not} a BNE, since player two would like to change there strategy to $(\bm{A}, \bm{A})$.
+    % \item $(X, \bm{I}), (\bm{A}, \bm{I})$ will be a BNE.
+    \item In this instance, the socially optimal equilibrium $\langle (\bm{A}, \bm{I}), (\bm{A}, \bm{I}) \rangle$ is not a BNE, since player 1 best response functions means that player 1 would like to play $(\bm{I}, \bm{I})$.
+    \item  The equilibrium $\langle (\bm{I}, \bm{A}), (\bm{I}, \bm{A}) \rangle$ still exists.
+\end{enumerate}
+\subsubsection*{One Fearless Individual, $ B_1 > C_1$.}
+\begin{align*}
+    \mathcal{B}^{S}_1 = \begin{cases}
+         \bm{II} \implies& \bm{I} \\
+         \bm{IA}\implies& \bm{I}  \\
+         \bm{AI}\implies& \bm{I}  \\
+         \bm{AA}\implies& \text{$(p, 1 - p)$ over $\{ \bm{I}, \bm{A}\}$ for any $p \in (0,1)$} \\
+    \end{cases}
+\end{align*}
+\begin{enumerate}[a.]
+        \item $(\bm{I}, \bm{A}), (\bm{I}, \bm{A})$ is no more a Bayesian Nash Equilibrium in this setting. Because $s_1(S) = \bm{A} \notin B_1^{S}(\bm{IA}) = \bm{I}$. The interpretation of this is that the fearless individual will rather interact when not infected, hence eliminating the equilibrium where players only interact when infected.
+
+        \item $ \langle (\bm{I}, \bm{I}), (\bm{I}, \bm{I}) \rangle$ is a BNE when $B_2 > \phi C_2$ and when $B_i > (1 - \phi)D_i$.
+\end{enumerate}
+
+\subsubsection*{Other Remarks}
+\begin{enumerate}[1.]
+    \item The equilibria for two fearless/selfish individuals are identical to the case with one fearless/selfish individual, the only difference is that the condition for an $\langle (\bm{I}, \bm{I}), (\bm{I}, \bm{I}) \rangle$ equilibria are reduced in the obvious way.
+    \item It is never possible to have an equilibrium of the form $ \langle (\bm{I}, \bm{A}), (\bm{A}, \bm{I}) \rangle$. One can see this easily by observing that it is required that $\mathcal{B}^{S}_2(\bm{AI}) = \bm{A}$, which will never be true.
+\item $ \langle (\bm{I}, \bm{I}), (\bm{A}, \bm{I}) \rangle$ and $ \langle (\bm{I}, \bm{I}), (\bm{I}, \bm{A}) \rangle$ can be BNE under specific conditions. I prove this in the appendix.
+\end{enumerate}
+
+
+\section{Discussion and Analysis}
+
+\subsection*{Discussion of Equilibria}
+
+% All of the equilibria I've found in the game seem quite normal.
+Under the assumption that in general, infecting and getting infected are very costly, $B_i < C_i, D_i$ there are four possible different equilibria.
+
+The first thing we can interpret in this situation is that $\langle (\bm{I},\bm{I}), (\bm{I}, \bm{I}) \rangle$ is an equilibrium only when
+\begin{align*}
+    B_i &> (1 - \phi)D_i \\
+    B_i &> \phi C_i
+\end{align*}
+This has a straight forward interpretation. When infections are generally to the infecter and the infectee, agents who choose the interact do so only when the expected costs are low enough.
+One aspect that is interesting here is that if $\phi$ is very low, then the expected cost of getting infected is very low, but the expected cost of infecting is higher---since the other player is more likely to be susceptible. Therefore there is a trade-off between the expected costs with respect to the infection rate $\phi$ of getting infected and infecting.
+
+The equilibrium $\langle (\bm{A}, \bm{I}), (\bm{A}, \bm{I}) \rangle$ can be interpreted as the \emph{socially optimal equilibrium}---on the assumption that it is socially optimal to minimise infections. If a government were trying to reduce the number of infections from an epidemic, they would like this to be the \emph{only} possible equilibrium with interaction. This equilibrium disappears when one or more of the players are ``selfish", they do not find it costly to infect another person.
+This equilibrium disappears because the selfish player would prefer to play the strategy $(\bm{I}, \bm{I})$.
+
+
+The equilibrium $\langle (\bm{I}, \bm{A}), (\bm{I}, \bm{A}) \rangle$ is a little unintuitive. It describes a scenario where individuals choose to interact when they are both infectious. This is an equilibrium because there is no cost from getting infected or infecting, since both agents are infected. Adding a cost to the benefit of an interaction does not change this equilibrium, so long as this cost does not outweigh all the benefits of the interaction.
+From a social policy perspective, this is not a desirable outcome. It adds a possibility of agents interacting when they are infected, which can be construed as a negative to society\footnote{If this equilibrium exists, then this adds another strategy to an individual considering whether to interact under risk. This could lead to a situation where one players play $(\bm{I}, \bm{A})$, and the other plays ($\bm{A}, \bm{I}$) where both players are aiming for a different equilibrium outcome. In this situation, the outcome is that the players don't interact, or that player 1 infects player 2.}. % TODO expand this
+This equilibrium disappears when one or more individuals have the characteristic that $B_i > C_i$.  This is because these individuals would rather play $\langle (\bm{I}, \bm{I}) \rangle$. This leads to the surprising conclusion that not fearing getting infected may be beneficial from a social policy perspective, on the assumption that a social planner would wish to get rid of the $\langle (\bm{I}, \bm{A}), (\bm{I}, \bm{A}) \rangle$ equilibrium.
+
+What if the infectious disease is quite mild? If this is the case we could assert that $B_i > C_i, D_i$, and then there are only two possible equilibria, $\langle (\bm{I}, \bm{I}) \rangle$ and $\langle (\bm{A}, \bm{A}) \rangle$. These results mirror the results of a much simpler perfect game, where players get a strictly positive payoff if they meet up and a payoff of $0$ otherwise. Thus this model generalises that simple model in a natural way.
+
+
+\subsection*{Discussion of Assumptions}
+
+This model makes some quite unrealistic assumption, which hinder it from being easily applicable to many situations which it is trying to model.
+Firstly, it assumes a situation where individuals commit whether to interact simultaneously---due to the static nature of the game.
+It is hard to imagine a scenario where this is realistic, perhaps a blind date or a situation where both players commit to their decision before asking (being asked) whether they want to interact.
+The assumption that player $i$ knows $B_i, C_i, D_i$ is already dubious, but this is nothing compared to the assumption that player $i$ knows the $B_j, C_j, D_j$ is very unrealistic.
+While this is the case, I think this model is still interesting---as it prescribes what two individuals should do if they do have all the relevant facts. Furthermore, the intuition about selfish individuals driving away the socially optimal equilibrium and fearless individuals driving away the bad equilibrium is insightful%
+\footnote{Models generally don't have to be realistic to be explanatory. However this means we have to give up the premise that only things to conform to reality are explanatory of real world phenomena.}%
+. 
+
+
+\subsection*{Policy takeaways}
+One of the results of this model the fact that more selfish behaviours drive out the socially optimal equilibrium.
+Another result of the model is that if individuals are afraid of infecting others but do not fear getting infected, this drives out the bad equilibrium outcome, but preserves the good outcome of individuals, avoiding interaction when they are infectious and interacting when they are susceptible (not infectious).
+One may use the model to argue (in a hand-wavy sort of way) that if the potential population of individuals with which one socially interacts is dominated by selfish individuals $(D > B)$, then they should tend towards avoiding social interactions and vice versa.
+
+\subsection*{What the model fails to capture}
+I think this model would be more interesting as a dynamic signalling game, where knowing one's $C$ and $D$ parameters could inform one about whether it is worth it to interact with this person or not. 
+The costs of interacting in this model are linearly related to the probability of being infectious, changing this assumption could have interesting consequences.
+
+
+
+\newpage
+\section{Appendix}%
+%
+Proof of IV:\\
+I claim that if $ B_1 < (1 - \phi)D_1$, $ B_1 > \phi C_1$ and $ B_2 > D_2$, then $ \langle (\bm{I}, \bm{I}), (\bm{A}, \bm{I}) \rangle$ is a BNE.
+
+To prove this we must show that $ \mathcal{B}_1^{I}(\bm{AI}) = \{\bm{I}\} $ and $ \mathcal{B}_1^{S}(\bm{AI}) = \{\bm{I}\}$, as well as that $\mathcal{B}_2^{\bm{I}}(\bm{AI})$ and $\mathcal{B}_2^{I}(\bm{II}) = \{\bm{A}\}$ and $\mathcal{B}_2^{S}(\bm{II}) = \{\bm{I}\}$.
+These equations are true precisely when we assume the antecedent of what I claim (Details are straightforward so I've omitted them).\\
+
+I also claim that if $ B_1 > (1 - \phi)D_1$, $ B_1 < \phi C_1$ and $ B_2 > C_2$, then $ \langle (\bm{I}, \bm{I}), (\bm{A}, \bm{I}) \rangle$ is a BNE.\\
+Proof is analogous to the above.
+%
+\\\\
+%
+%\newpage
+%\bibliography{/home/carneca/Documents/Latex/bibmaster.bib}
+\end{document}

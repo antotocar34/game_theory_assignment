@@ -1,0 +1,140 @@
+game theory -- infection from interaction.
+
+
+There are 2 players.
+
+
+Every player has two types, whether they are infected or not.
+
+
+Two choices interaction or not.
+
+
+p - probability of getting infected
+I_j = probability of j being infected.
+C_i = Cost to i from getting infected
+
+p * C_i = Expected cost of infecting.
+
+p * C_i = I_j * C_i
+
+
+e - probability that player i infects player j.
+I_i - probability of player i being infected.
+
+D_i - Player i's disutility from infecting player j.
+
+
+B_i - Benefit to i from interaction.
+
+
+So the utility function for player i is as follows.
+
+U_i(Interacting) = B_i - ( (I_j * C_i) + (I_i * D_i))
+
+So 
+utility_from_interaction = benefit - cost
+utility_from_interaction = benefit from interaction 
+                           - cost from infection
+utility_from_interaction = benefit from interaction 
+                           - (cost from getting infected
+                            + cost from infecting)
+
+
+
+U_i(Interacting) = B_i - ( (I_j * C_i) + (I_i * D_i))
+
+U_i(Not Interacting) = 0
+
+-----------
+
+Ideas
+
+Extend it to N players?
+
+So what we need is some sort of strategic interaction effect. In what form can this arise?
+
+Well if I know that some percentage of the population is infected, and that individuals derive negative utility from 
+infecting, then I should be able to derive something.
+
+Selfish players and non-selfish players.
+
+If player is selfish, them expressing interest is indicative of them being _more_ likely to be infected. <- Can I encode this in the model?
+
+If player is non-selfish, them expressing interest is indicative of them being _less_ likely to be infected. <- Can I encode this in the model?
+
+
+What is the setup of the game?
+
+
+
+               Interact     Don't
+             |            |  
+   Interact  |  Ui, Uj    |   0
+             |            |
+     Don't   |     0      |   0
+             |            |
+
+Immediate Consequence: (Don't, Don't) will always be a NE. -> Does this generalise to N players? 
+                                                                - Yes of course.
+
+However (Don't, Interact, Interact) is not necessarily a nash equilibrium, because 
+
+
+                       (Interact, Interact) is a NE iff U_i, U_j > 0. -> Does this generalise?
+
+What is the intuition behind this? Well, with (Don't, Don't) the players are committing to a state where they cannot possibly get a positive payoff.
+
+If one of the utility functions has a negative payoff, then that one player will never want to _risk_ the interaction and therefore he will never interact.
+
+Ok, pretty simple game so far.
+
+
+-- Q. What happens if the players have a negative payoff from being rejected?
+
+Well let's have a situation where
+
+Let R < 0, be the cost to utility of being rejected.
+
+
+               Interact      Don't
+             |            |  
+   Interact  |  Ui, Uj    |    R, 0
+             |            |
+     Don't   |   0, R     |    0, 0
+             |            |
+
+
+If U_i, U_j > R, then NE is preserved at (Interact, Interact). -- TODO -> Double check for precise information.
+
+(Don't, Don't) is still a NE.
+
+INTERPRETATION
+--------------
+-- Situation where individuals pre-commit to decision before informing the other party.
+    -- Ensures the game is static.
+
+
+IDEAS
+-----
+-- This might be more interesting with N players.
+
+-- Maybe it would be better if the person who rejects incurs a cost to utility. I mean this is not really gonna help.
+
+
+N Player Case
+-------------
+
+In the N player case the utility function for not interacting coudl be different.
+Because there is an incentive to deviate from the _Don't_ strategy.
+
+
+
+
+
+
+
+
+
+
+
